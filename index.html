@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Kuliner Tradisional Indonesia</title>
+<link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+<header>
+  Kuliner Tradisional Indonesia
+</header>
+<main>
+  <section>
+    <h2>Pilih Makanan untuk Detail</h2>
+    <div class="grid" id="foodGrid" role="list">
+      <!-- Cards will go here -->
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+  <div class="modal-content">
+    <button class="close-btn" aria-label="Close detail modal" id="modalCloseBtn">&times;</button>
+    <h3 id="modalTitle"></h3>
+    <img id="modalImage" src="" alt="" />
+    <p id="modalDescription"></p>
+    <p><strong>Asal Daerah:</strong> <span id="modalOrigin"></span></p>
+    <p><strong>Bahan Utama:</strong> <span id="modalIngredients"></span></p>
+  </div>
+</div>
+
+<script>
+  const foods = [
+    {
+      id: 1,
+      name: "Rendang",
+      image: "rendang.jpg",
+      description: "Rendang adalah masakan daging yang dimasak dengan santan dan rempah-rempah khas Sumatera Barat hingga empuk dan berwarna coklat gelap.",
+      origin: "Sumatera Barat",
+      ingredients: "Daging sapi, santan, serai, bawang, jahe, lengkuas, cabai, rempah-rempah"
+    },
+    {
+      id: 2,
+      name: "Gudeg",
+      image: "gudeg.jpg",
+      description: "Gudeg adalah makanan khas Yogyakarta dan Jawa Tengah yang terbuat dari nangka muda yang dimasak dengan santan dan gula merah.",
+      origin: "Yogyakarta, Jawa Tengah",
+      ingredients: "Nangka muda, santan, gula merah, daun salam, kencur, telur, ayam"
+    },
+    {
+      id: 3,
+      name: "Sate Ayam",
+      image: "sate-ayam.jpg",
+      description: "Sate Ayam adalah potongan daging ayam yang ditusuk dan dibakar kemudian disajikan dengan bumbu kacang atau kecap manis.",
+      origin: "Indonesia (asal tidak spesifik)",
+      ingredients: "Daging ayam, kecap manis, bumbu kacang, serai, bawang merah, cabai"
+    },
+    {
+      id: 4,
+      name: "Pempek",
+      image: "pempek.jpg",
+      description: "Pempek adalah makanan khas Palembang yang terbuat dari ikan dan tepung sagu, disajikan dengan kuah cuka atau cuko pedas.",
+      origin: "Palembang, Sumatera Selatan",
+      ingredients: "Ikan tenggiri, tepung sagu, bawang putih, garam, kuah cuka"
+    },
+    {
+      id: 5,
+      name: "Nasi Uduk",
+      image: "nasi-uduk.jpg",
+      description: "Nasi Uduk adalah nasi yang dimasak dengan santan dan daun pandan sehingga aromanya harum, biasa disajikan dengan lauk pauk khas Betawi.",
+      origin: "Betawi (Jakarta)",
+      ingredients: "Nasi, santan, daun pandan, serai, lauk seperti ayam goreng, telur, tempe"
+    },
+    {
+      id: 6,
+      name: "Bakso",
+      image: "bakso.jpg",
+      description: "Bakso adalah bola daging yang biasanya terbuat dari daging sapi cincang, disajikan dalam kuah kaldu yang panas dengan mie dan sayuran.",
+      origin: "Indonesia",
+      ingredients: "Daging sapi, tepung tapioka, bawang putih, kaldu, mie, sawi"
+    }
+  ];
+
+  const foodGrid = document.getElementById('foodGrid');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalImage = document.getElementById('modalImage');
+  const modalDescription = document.getElementById('modalDescription');
+  const modalOrigin = document.getElementById('modalOrigin');
+  const modalIngredients = document.getElementById('modalIngredients');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+  function createFoodCard(food) {
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.setAttribute('role', 'listitem');
+    card.setAttribute('aria-label', `Detail makanan: ${food.name}`);
+    card.type = 'button';
+    card.innerHTML = `
+      <img src="${food.image}" alt="Foto ${food.name}">
+      <div class="card-title">${food.name}</div>
+    `;
+    card.addEventListener('click', () => openModal(food));
+    return card;
+  }
+
+  function openModal(food) {
+    modalTitle.textContent = food.name;
+    modalImage.src = food.image;
+    modalImage.alt = `Foto ${food.name}`;
+    modalDescription.textContent = food.description;
+    modalOrigin.textContent = food.origin;
+    modalIngredients.textContent = food.ingredients;
+    modal.classList.add('show');
+    modalCloseBtn.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove('show');
+  }
+
+  modalCloseBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+      closeModal();
+    }
+  });
+
+  // Populate the grid
+  foods.forEach(food => {
+    const card = createFoodCard(food);
+    foodGrid.appendChild(card);
+  });
+</script>
+<section id="contact" class="contact">
+    <h2>Kontak Kami</h2>
+    <p>Email: info@kulinertradisional.com</p>
+    <p>Telepon: +62 812 3456 7890</p>
+    <p>Alamat: Jl. Kuliner No. 123, Kota Tradisional</p>
+</section>
+
+<footer>
+  <p>&copy; 2024 Kuliner Tradisional Indonesia. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
+</content>
+</create_file>
